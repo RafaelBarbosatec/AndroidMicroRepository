@@ -17,3 +17,6 @@
  - "android.arch.persistence.room:rxjava2:1.1.1"
  - kpt "android.arch.persistence.room:compiler:1.1.1"
 
+ ### koin injection
+  - "org.koin:koin-android-viewmodel:2.0.1"
+
