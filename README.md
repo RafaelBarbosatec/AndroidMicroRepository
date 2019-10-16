@@ -1,6 +1,4 @@
-# SuperDigitalRepositorySDK
-
-SDK responsavel por centralizar a camada de MODEL(dados e autenticação) da SuperDigital.
+# RepositoryPokemonSDK
 
 ## Dependências
 
