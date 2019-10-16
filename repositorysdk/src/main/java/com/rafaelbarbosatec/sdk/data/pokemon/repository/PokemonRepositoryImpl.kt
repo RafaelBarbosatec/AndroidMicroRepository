@@ -29,12 +29,15 @@ class PokemonRepositoryImpl(
     private val executor: Executor
 ) : PokemonRepository, RepositoryLiveCycle() {
 
+    private var pokemonsLocal = ArrayList<Pokemon>()
+
     override fun pokemons(pokemons: (ResponseAny<ArrayList<Pokemon>>) -> Unit) {
         pokemonDb
             .all()
             .listen(this) {
                 if (it.isNotEmpty()) {
-                    val result = ResponseSuccess<ArrayList<Pokemon>>(ArrayList(it))
+                    pokemonsLocal = ArrayList(it)
+                    val result = ResponseSuccess(pokemonsLocal)
                     result.fromDb = true
                     pokemons(result)
                 } else {
@@ -54,16 +57,16 @@ class PokemonRepositoryImpl(
            }
     }
 
-    fun pokemonsServer(pokemons: (ResponseAny<ArrayList<Pokemon>>) -> Unit) {
+    private fun pokemonsServer(pokemons: (ResponseAny<ArrayList<Pokemon>>) -> Unit) {
         pokemonApi
             .getPokemons()
             .listen(this) {
                 when(it){
-                    //Para teste peguei somente os 100 primeiros itens(lista de pokemons muito grande)
                     is ResponseSuccess -> {
-                        val data = ArrayList(it.body.subList(0, 100))
+                        val data = ArrayList(it.body)
                         insertPokemonsDb(ArrayList(data))
-                        pokemons(ResponseSuccess(data))
+                        if(pokemonsLocal.isEmpty())
+                            pokemons(ResponseSuccess(data))
                     }
                     else -> pokemons(it)
                 }
