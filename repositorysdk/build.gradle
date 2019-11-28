@@ -5,7 +5,18 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'maven-publish'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.rafaelbarbosatec.repository'
+publishing {
+    publications {
+        marven(MavenPublication) {
+            groupId = 'com.github.RafaelBarbosatec'
+            artifactId = 'AndroidMicroRepository'
+            version = '0.1.0'
+            group = 'com.rafaelbarbosatec.repository'
+            artifact("$buildDir/outputs/aar/repositorysdk-release.aar")
+        }
+    }
+}
+
 
 android {
     compileSdkVersion 29
@@ -50,6 +61,7 @@ dependencies {
     implementation  "android.arch.persistence.room:rxjava2:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
 
+    testImplementation 'junit:junit:4.12'
     implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
 
 }
