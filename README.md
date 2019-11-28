@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/RafaelBarbosatec/AndroidMicroRepository.svg)](https://jitpack.io/#RafaelBarbosatec/AndroidMicroRepository)
+
 # RepositoryPokemonSDK
 
 ## Dependências
